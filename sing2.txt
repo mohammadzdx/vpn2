@@ -1,0 +1,193 @@
+{
+"dns": {
+"hosts": {
+"geosite:category-porn": "127.0.0.1",
+"domain:googleapis.cn": "googleapis.com"
+},
+"servers": [
+{
+"address": "fakedns",
+"domains": [
+"geosite:cn",
+"domain:ir",
+"geosite:category-ir",
+"geosite:private"
+ ]
+},
+"8.26.56.26"
+]
+},
+"fakedns": [
+{
+"ipPool": "198.18.0.0/15",
+"poolSize": 10000
+}
+ ],
+"inbounds": [
+{
+"listen": "127.0.0.1",
+"port": 10808,
+"protocol": "socks",
+"settings": {
+"auth": "noauth",
+"udp": true,
+"userLevel": 8
+},
+"sniffing": {
+"destOverride": [
+"http",
+"tls",
+"fakedns"
+ ],
+"enabled": true
+},
+"tag": "socks"
+},
+{
+"listen": "127.0.0.1",
+"port": 10809,
+"protocol": "http",
+"settings": {
+"userLevel": 8
+},
+"tag": "http"
+},
+{
+"listen": "127.0.0.1",
+"port": 10853,
+"protocol": "dokodemo-door",
+"settings": {
+"address": "8.26.56.26",
+"network": "tcp,udp",
+"port": 53
+},
+"tag": "dns-in"
+}
+],
+"log": {
+"access": "none",
+"loglevel": "warning"
+},
+"outbounds": [
+{
+"protocol": "vless",
+"settings": {
+"vnext": [
+{
+"address": "www.speedtest.net",
+"port": 443,
+"users": [
+{
+"encryption": "none",
+"flow": "",
+"id": "2cf46f5a-a626-4aa6-af5f-6c788c9b7bb4",
+"level": 8,
+"security": "auto"
+}
+ ]
+}
+]
+},
+"streamSettings": {
+"network": "ws",
+"security": "tls",
+"tlsSettings": {
+"allowInsecure": false,
+"alpn": [
+"http/1.1"
+ ],
+"echConfigList": "",
+"echForceQuery": "",
+"echServerKeys": "",
+"fingerprint": "chrome",
+"publicKey": "",
+"serverName": "sPARKLInG-foG-Cc66.MAmaDZdx.woRkers.Dev",
+"shortId": "",
+"show": false,
+"spiderX": ""
+},
+"wsSettings": {
+"headers": {
+"Host": "sparkling-fog-cc66.mamadzdx.workers.dev"
+},
+"path": "/eyJqdW5rIjoiQklPZ2FYZ2M0NjA2dmEzIiwicHJvdG9jb2wiOiJ2bCIsIm1vZGUiOiJwcm94eWlwIiwicGFuZWxJUHMiOlsiNS42MS4zOS4xODMiXX0=?ed=2560"
+}
+},
+"tag": "proxy"
+},
+{
+"protocol": "freedom",
+"settings": {
+"domainStrategy": "UseIP"
+},
+"tag": "direct"
+},
+{
+"protocol": "blackhole",
+"settings": {
+"response": {
+"type": "http"
+}
+},
+"tag": "block"
+},
+{
+"protocol": "dns",
+"tag": "dns-out"
+}
+],
+"remarks": "💦 30 - VLESS - Domain : 443",
+"routing": {
+"domainStrategy": "AsIs",
+"rules": [
+{
+"inboundTag": [
+"dns-in"
+ ],
+"outboundTag": "dns-out",
+"type": "field"
+},
+{
+"ip": [
+"8.26.56.26"
+ ],
+"outboundTag": "proxy",
+"port": "53",
+"type": "field"
+},
+{
+"domain": [
+"domain:ir",
+"geosite:category-ir",
+"geosite:private"
+ ],
+"outboundTag": "direct",
+"type": "field"
+},
+{
+"ip": [
+"geoip:ir",
+"geoip:private"
+ ],
+"outboundTag": "direct",
+"type": "field"
+},
+{
+"domain": [
+"geosite:category-porn"
+ ],
+"outboundTag": "block",
+"type": "field"
+},
+{
+"ip": [
+"10.10.34.34",
+"10.10.34.35",
+"10.10.34.36"
+ ],
+"outboundTag": "block",
+"type": "field"
+}
+]
+}
+}
